@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':domain', ':repository', ':usecase'
 rootProject.name='news-fondue-android'

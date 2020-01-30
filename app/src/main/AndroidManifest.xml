@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.chris.news.fondue.android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".NewsApplication"
         android:allowBackup="true"

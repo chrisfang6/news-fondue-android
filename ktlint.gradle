@@ -23,8 +23,6 @@ task ktlint(type: JavaExec, group: "verification") {
     // see https://github.com/pinterest/ktlint#usage for more
 }
 
-preBuild.dependsOn ktlint
-
 task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint

@@ -1,0 +1,28 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+apply from: '../ktlint.gradle'
+
+compileKotlin.dependsOn ktlint
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':domain')
+    implementation project(path: ':usecase')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+
+    // architecture
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.dependencies.architecture.timber_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.dependencies.architecture.rxjava_version"
+    implementation "com.google.dagger:dagger:$rootProject.ext.dependencies.architecture.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.architecture.dagger_version"
+
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.network.retrofit_version"
+
+}

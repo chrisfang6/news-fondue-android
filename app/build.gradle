@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply from: '../ktlint.gradle'
 
@@ -21,12 +22,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
+
+preBuild.dependsOn ktlint
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':domain')
+    implementation project(path: ':usecase')
+    implementation project(path: ':repository')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.android.jetpack.appcompat_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.android.jetpack.core_ktx_version"
@@ -39,6 +49,14 @@ dependencies {
 
     // architecture
     implementation "com.jakewharton.timber:timber:$rootProject.ext.dependencies.architecture.timber_version"
+    implementation "com.google.dagger:dagger:$rootProject.ext.dependencies.architecture.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.architecture.dagger_version"
+
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.dependencies.network.okhttp_version"
 
     // Test
     testImplementation "junit:junit:$rootProject.ext.dependencies.android.test.junit_version"
