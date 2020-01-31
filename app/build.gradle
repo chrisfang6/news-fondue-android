@@ -37,6 +37,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ext.dependencies.android.jetpack.nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ext.dependencies.android.jetpack.nav_version"
 
+    // architecture
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.dependencies.architecture.timber_version"
+
     // Test
     testImplementation "junit:junit:$rootProject.ext.dependencies.android.test.junit_version"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.dependencies.android.test.runner_version"

@@ -9,7 +9,7 @@ ext {
             versionName      : "0.0.1"
     ]
     dependencies = [
-            android: [
+            android     : [
                     constraintlayout_version: "1.1.3",
                     jetpack                 : [
                             nav_version      : "2.2.0",
@@ -21,6 +21,9 @@ ext {
                             runner_version  : "1.1.1",
                             espresso_version: "3.2.0"
                     ]
+            ],
+            architecture: [
+                    timber_version: "4.7.1"
             ]
     ]
 }
