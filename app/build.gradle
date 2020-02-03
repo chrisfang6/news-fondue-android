@@ -43,6 +43,22 @@ dependencies {
 
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.dependencies.android.constraintlayout_version"
 
+    // lifecycle
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.dependencies.android.jetpack.lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.dependencies.android.jetpack.lifecycle_version"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$rootProject.ext.dependencies.android.jetpack.savedstate_version"
+    // Annotation processor
+//    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.ext.dependencies.android.jetpack.lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.dependencies.android.jetpack.lifecycle_version"
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$rootProject.ext.dependencies.android.jetpack.lifecycle_version"
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$rootProject.ext.dependencies.android.jetpack.arch_version"
+
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ext.dependencies.android.jetpack.nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ext.dependencies.android.jetpack.nav_version"

@@ -3,8 +3,10 @@ package net.chris.news.fondue.android.di
 import dagger.BindsInstance
 import dagger.Component
 import net.chris.news.fondue.android.MainActivity
+import javax.inject.Singleton
 
-@Component(modules = [AppModule::class, RepositoryModule::class])
+@Singleton
+@Component(modules = [AppModule::class, RepositoryModule::class, ViewModelModule::class])
 interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
