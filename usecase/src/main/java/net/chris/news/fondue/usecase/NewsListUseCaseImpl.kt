@@ -1,5 +1,8 @@
 package net.chris.news.fondue.usecase
 
+import net.chris.news.fondue.usecase.bo.HeadlinesBO
+import net.chris.news.fondue.usecase.callback.ResultListener
+import net.chris.news.fondue.usecase.repo.NewsListRepository
 import javax.inject.Inject
 
 class NewsListUseCaseImpl @Inject constructor(
@@ -9,6 +12,6 @@ class NewsListUseCaseImpl @Inject constructor(
     override fun getHeadlines(
         category: String,
         startIndex: Int,
-        listener: ResultListener<Headlines>
-    ) = newsListRepository.getNewsList(category, startIndex, listener, Headlines::class.java)
+        listener: ResultListener<HeadlinesBO>
+    ) = newsListRepository.getNewsList(category, startIndex, listener, HeadlinesBO::class.java)
 }

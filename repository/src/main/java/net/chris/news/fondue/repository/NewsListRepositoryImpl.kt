@@ -2,9 +2,10 @@ package net.chris.news.fondue.repository
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import net.chris.news.fondue.usecase.Headlines
-import net.chris.news.fondue.usecase.NewsListRepository
-import net.chris.news.fondue.usecase.ResultListener
+import net.chris.news.fondue.repository.network.NewsApi
+import net.chris.news.fondue.usecase.bo.HeadlinesBO
+import net.chris.news.fondue.usecase.repo.NewsListRepository
+import net.chris.news.fondue.usecase.callback.ResultListener
 import javax.inject.Inject
 
 class NewsListRepositoryImpl @Inject constructor(
@@ -19,8 +20,8 @@ class NewsListRepositoryImpl @Inject constructor(
         clazz: Class<T>
     ) {
         when (clazz.name) {
-            Headlines::class.java.name -> {
-                compositeDisposable.add(newsApi.getRealTimeHot(category, startIndex)
+            HeadlinesBO::class.java.name -> {
+                compositeDisposable.add(newsApi.fetchHeadlines(category, startIndex)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         { listener.onResult(it as T) },

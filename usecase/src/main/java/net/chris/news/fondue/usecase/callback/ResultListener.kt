@@ -1,4 +1,4 @@
-package net.chris.news.fondue.usecase
+package net.chris.news.fondue.usecase.callback
 
 interface ResultListener<T> {
 

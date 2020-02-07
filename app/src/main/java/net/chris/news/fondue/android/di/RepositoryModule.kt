@@ -5,9 +5,9 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import net.chris.news.fondue.android.BuildConfig
-import net.chris.news.fondue.repository.NewsApi
+import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.repository.NewsListRepositoryImpl
-import net.chris.news.fondue.usecase.NewsListRepository
+import net.chris.news.fondue.usecase.repo.NewsListRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level

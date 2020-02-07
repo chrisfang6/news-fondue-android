@@ -1,4 +1,6 @@
-package net.chris.news.fondue.usecase
+package net.chris.news.fondue.usecase.repo
+
+import net.chris.news.fondue.usecase.callback.ResultListener
 
 interface NewsListRepository {
 
