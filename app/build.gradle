@@ -74,6 +74,9 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.network.retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.dependencies.network.okhttp_version"
 
+    // persistence
+    implementation "androidx.room:room-runtime:$rootProject.ext.dependencies.android.jetpack.room_version"
+
     // Test
     testImplementation "junit:junit:$rootProject.ext.dependencies.android.test.junit_version"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.dependencies.android.test.runner_version"

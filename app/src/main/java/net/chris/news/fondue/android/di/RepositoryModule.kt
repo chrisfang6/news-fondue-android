@@ -1,12 +1,18 @@
 package net.chris.news.fondue.android.di
 
+import android.content.Context
+import androidx.room.Room
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import net.chris.news.fondue.android.BuildConfig
-import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.repository.NewsListRepositoryImpl
+import net.chris.news.fondue.repository.converter.NewsConverter
+import net.chris.news.fondue.repository.converter.NewsPersistentConverter
+import net.chris.news.fondue.repository.dao.NewsDAO
+import net.chris.news.fondue.repository.db.NewsDatabase
+import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.usecase.repo.NewsListRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,6 +28,10 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindNewsListRepository(repository: NewsListRepositoryImpl): NewsListRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindNewsPersistentConverter(newsPersistentConverter: NewsPersistentConverter): NewsConverter
 
     companion object {
 
@@ -45,6 +55,22 @@ abstract class RepositoryModule {
         @Provides
         fun provideCompositeDisposable(): CompositeDisposable {
             return CompositeDisposable()
+        }
+
+        @Singleton
+        @Provides
+        fun provideNewsDatabase(context: Context): NewsDatabase {
+            return Room.databaseBuilder(
+                context,
+                NewsDatabase::class.java,
+                "news_database"
+            ).build()
+        }
+
+        @Singleton
+        @Provides
+        fun provideNewsDAO(newsDatabase: NewsDatabase): NewsDAO {
+            return newsDatabase.newsDao()
         }
     }
 }

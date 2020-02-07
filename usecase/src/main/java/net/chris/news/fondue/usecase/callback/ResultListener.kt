@@ -1,8 +1,8 @@
 package net.chris.news.fondue.usecase.callback
 
-interface ResultListener<T> {
+interface ResultListener {
 
-    fun onResult(content: T)
+    fun onSuccess()
 
     fun onError(error: Throwable)
 }

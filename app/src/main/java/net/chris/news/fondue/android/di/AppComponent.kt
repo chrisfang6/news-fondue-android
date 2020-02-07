@@ -1,5 +1,6 @@
 package net.chris.news.fondue.android.di
 
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import net.chris.news.fondue.android.MainActivity
@@ -16,6 +17,9 @@ interface AppComponent {
 
         @BindsInstance
         fun baseUrl(baseUrl: String): Builder
+
+        @BindsInstance
+        fun applicationContext(context: Context): Builder
 
         fun build(): AppComponent
     }

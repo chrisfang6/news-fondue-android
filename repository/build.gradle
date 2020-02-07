@@ -1,10 +1,32 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+//apply plugin: 'kotlin'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-android-extensions'
 
 apply from: '../ktlint.gradle'
 
-compileKotlin.dependsOn ktlint
+preBuild.dependsOn ktlint
+
+android {
+    compileSdkVersion rootProject.android.compileSdkVersion
+    buildToolsVersion rootProject.android.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -12,7 +34,6 @@ dependencies {
     implementation project(path: ':usecase')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
 
     // architecture
     implementation "com.jakewharton.timber:timber:$rootProject.ext.dependencies.architecture.timber_version"
@@ -24,5 +45,18 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.network.retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.dependencies.network.retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.network.retrofit_version"
+
+    // persistence
+    implementation "androidx.room:room-runtime:$rootProject.ext.dependencies.android.jetpack.room_version"
+    // For Kotlin use kapt instead of annotationProcessor
+    kapt "androidx.room:room-compiler:$rootProject.ext.dependencies.android.jetpack.room_version"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$rootProject.ext.dependencies.android.jetpack.room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$rootProject.ext.dependencies.android.jetpack.room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+//    implementation "androidx.room:room-guava:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$rootProject.ext.dependencies.android.jetpack.room_version"
 
 }
