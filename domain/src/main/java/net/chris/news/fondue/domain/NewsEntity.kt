@@ -1,6 +1,6 @@
 package net.chris.news.fondue.domain
 
-data class News(
+data class NewsEntity(
     val alias: String?,
     val boardid: String?,
     val cid: String?,
