@@ -17,6 +17,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+        staging {
+            initWith debug
+            applicationIdSuffix ".staging"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -81,4 +89,8 @@ dependencies {
     testImplementation "junit:junit:$rootProject.ext.dependencies.android.test.junit_version"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.dependencies.android.test.runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.dependencies.android.test.espresso_version"
+
+    // Debug tools
+    implementation "com.facebook.stetho:stetho:$rootProject.ext.dependencies.debugTools.stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.dependencies.debugTools.stetho_version"
 }

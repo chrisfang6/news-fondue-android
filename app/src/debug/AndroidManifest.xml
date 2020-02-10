@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.chris.news.fondue.android">
+
+    <application
+        android:name=".NewsDebugApplication"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:name" />
+</manifest>

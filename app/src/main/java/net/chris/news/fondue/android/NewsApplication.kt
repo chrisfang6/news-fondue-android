@@ -4,20 +4,24 @@ import android.app.Application
 import net.chris.news.fondue.android.di.AppComponent
 import net.chris.news.fondue.android.di.DaggerAppComponent
 import net.chris.news.fondue.android.log.CrashReportingTree
-import timber.log.Timber
-import timber.log.Timber.DebugTree
+import timber.log.Timber.Tree
+import timber.log.Timber.plant
 
-class NewsApplication : Application() {
+open class NewsApplication : Application() {
 
     private lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        component = DaggerAppComponent.builder().baseUrl("http://c.m.163.com/").applicationContext(this).build()
+        component = generateAppComponent()
 
-        Timber.plant(if (BuildConfig.DEBUG) DebugTree() else CrashReportingTree())
+        plant(generateTree())
     }
+
+    open fun generateTree(): Tree = CrashReportingTree()
+
+    private fun generateAppComponent() = DaggerAppComponent.builder().baseUrl("http://c.m.163.com/").applicationContext(this).build()
 
     fun getAppComponent() = component
 }

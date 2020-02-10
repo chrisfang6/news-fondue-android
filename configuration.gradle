@@ -36,6 +36,9 @@ ext {
                     retrofit_version: "2.7.1",
                     okhttp_version  : "3.14.4",
                     gson_version    : "2.8.5"
+            ],
+            debugTools : [
+                    stetho_version: "1.5.1"
             ]
     ]
 }

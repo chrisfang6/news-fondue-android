@@ -2,6 +2,7 @@ package net.chris.news.fondue.android.di
 
 import android.content.Context
 import androidx.room.Room
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -43,6 +44,7 @@ abstract class RepositoryModule {
                 .client(
                     OkHttpClient.Builder()
                         .addInterceptor(HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) Level.BODY else Level.NONE))
+                        .addInterceptor(StethoInterceptor())
                         .build()
                 )
                 .addConverterFactory(GsonConverterFactory.create())
