@@ -9,13 +9,13 @@ apply from: '../ktlint.gradle'
 preBuild.dependsOn ktlint
 
 android {
-    compileSdkVersion rootProject.android.compileSdkVersion
-    buildToolsVersion rootProject.android.buildToolsVersion
+    compileSdkVersion build_conf.compileSdkVersion
+    buildToolsVersion build_conf.buildToolsVersion
     defaultConfig {
-        minSdkVersion rootProject.android.minSdkVersion
-        targetSdkVersion rootProject.android.targetSdkVersion
-        versionCode rootProject.android.versionCode
-        versionName rootProject.android.versionName
+        minSdkVersion build_conf.minSdkVersion
+        targetSdkVersion build_conf.targetSdkVersion
+        versionCode build_conf.versionCode
+        versionName build_conf.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -39,30 +39,30 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':usecase')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation deps.kotlin.stdlib
 
     // architecture
-    implementation "com.jakewharton.timber:timber:$rootProject.ext.dependencies.architecture.timber_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.dependencies.architecture.rxjava_version"
-    implementation "com.google.dagger:dagger:$rootProject.ext.dependencies.architecture.dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.architecture.dagger_version"
+    implementation deps.arch.timber
+    implementation deps.arch.rxjava
+    implementation deps.arch.dagger
+    kapt deps.arch.dagger_compiler
 
     // network
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.network.retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.dependencies.network.retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.network.retrofit_version"
+    implementation deps.network.retrofit
+    implementation deps.network.retrofit_converter_gson
+    implementation deps.network.retrofit_adapter_rxjava
 
     // persistence
-    implementation "androidx.room:room-runtime:$rootProject.ext.dependencies.android.jetpack.room_version"
+    implementation deps.jetpack.room.runtime
     // For Kotlin use kapt instead of annotationProcessor
-    kapt "androidx.room:room-compiler:$rootProject.ext.dependencies.android.jetpack.room_version"
+    kapt deps.jetpack.room.compiler
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$rootProject.ext.dependencies.android.jetpack.room_version"
+    implementation deps.jetpack.room.ktx
     // optional - RxJava support for Room
-    implementation "androidx.room:room-rxjava2:$rootProject.ext.dependencies.android.jetpack.room_version"
+    implementation deps.jetpack.room.rxjava
     // optional - Guava support for Room, including Optional and ListenableFuture
 //    implementation "androidx.room:room-guava:$room_version"
     // Test helpers
-    testImplementation "androidx.room:room-testing:$rootProject.ext.dependencies.android.jetpack.room_version"
+    testImplementation deps.test.room
 
 }

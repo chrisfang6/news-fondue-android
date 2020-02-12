@@ -10,13 +10,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':domain')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation deps.kotlin.stdlib
 
     // network
-    implementation "com.google.code.gson:gson:$rootProject.ext.dependencies.network.gson_version"
+    implementation deps.network.gson
 
     // architecture
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.dependencies.architecture.rxjava_version"
-    implementation "com.google.dagger:dagger:$rootProject.ext.dependencies.architecture.dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.architecture.dagger_version"
+    implementation deps.arch.rxjava
+    implementation deps.arch.dagger
+    kapt deps.arch.dagger_compiler
 }
