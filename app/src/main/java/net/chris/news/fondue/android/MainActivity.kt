@@ -1,24 +1,23 @@
 package net.chris.news.fondue.android
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import net.chris.news.fondue.android.viewmodel.NewsViewModel
+import androidx.fragment.app.Fragment
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     @Inject
-    lateinit var newsViewModelFactory: ViewModelProvider.Factory
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        (application as NewsApplication).getAppComponent().inject(this)
-
-        val newsViewModel: NewsViewModel = ViewModelProvider(this, newsViewModelFactory)[NewsViewModel::class.java]
-
-        newsViewModel.request()
     }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 }

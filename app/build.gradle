@@ -34,6 +34,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
 }
 
 preBuild.dependsOn ktlint
@@ -73,8 +76,11 @@ dependencies {
 
     // architecture
     implementation deps.arch.timber
-    implementation deps.arch.dagger
-    kapt deps.arch.dagger_compiler
+    implementation deps.arch.dagger.runtime
+    implementation deps.arch.dagger.android
+    implementation deps.arch.dagger.android_support
+    kapt deps.arch.dagger.compiler
+    kapt deps.arch.dagger.android_processor
 
     // network
     implementation deps.network.retrofit

@@ -44,8 +44,8 @@ dependencies {
     // architecture
     implementation deps.arch.timber
     implementation deps.arch.rxjava
-    implementation deps.arch.dagger
-    kapt deps.arch.dagger_compiler
+    implementation deps.arch.dagger.runtime
+    kapt deps.arch.dagger.compiler
 
     // network
     implementation deps.network.retrofit

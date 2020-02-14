@@ -1,27 +1,34 @@
 package net.chris.news.fondue.android
 
+import android.app.Activity
 import android.app.Application
-import net.chris.news.fondue.android.di.AppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import net.chris.news.fondue.android.di.DaggerAppComponent
 import net.chris.news.fondue.android.log.CrashReportingTree
 import timber.log.Timber.Tree
 import timber.log.Timber.plant
+import javax.inject.Inject
 
-open class NewsApplication : Application() {
+open class NewsApplication : Application(), HasActivityInjector {
 
-    private lateinit var component: AppComponent
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
 
-        component = generateAppComponent()
+        inject()
 
         plant(generateTree())
     }
 
+    fun inject() = generateAppComponent().inject(this)
+
     open fun generateTree(): Tree = CrashReportingTree()
 
-    private fun generateAppComponent() = DaggerAppComponent.builder().baseUrl("http://c.m.163.com/").applicationContext(this).build()
+    fun generateAppComponent() = DaggerAppComponent.builder().baseUrl("http://c.m.163.com/").applicationContext(this).build()
 
-    fun getAppComponent() = component
+    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
 }
