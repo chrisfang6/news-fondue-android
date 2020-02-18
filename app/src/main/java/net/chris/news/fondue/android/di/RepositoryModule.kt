@@ -34,10 +34,8 @@ abstract class RepositoryModule {
     @Binds
     abstract fun bindNewsPersistentConverter(newsPersistentConverter: NewsPersistentConverter): NewsConverter
 
-    @Module
     companion object {
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideNewsApi(baseUrl: String): NewsApi {
@@ -55,14 +53,12 @@ abstract class RepositoryModule {
                 .create(NewsApi::class.java)
         }
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideCompositeDisposable(): CompositeDisposable {
             return CompositeDisposable()
         }
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideNewsDatabase(context: Context): NewsDatabase {
@@ -73,7 +69,6 @@ abstract class RepositoryModule {
             ).build()
         }
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideNewsDAO(newsDatabase: NewsDatabase): NewsDAO {
