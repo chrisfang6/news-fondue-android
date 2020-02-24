@@ -6,18 +6,21 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import io.reactivex.disposables.CompositeDisposable
 import net.chris.news.fondue.android.BuildConfig
+import net.chris.news.fondue.repository.Constant.DATABASE_NAME
 import net.chris.news.fondue.repository.NewsListRepositoryImpl
-import net.chris.news.fondue.repository.converter.NewsConverter
+import net.chris.news.fondue.repository.converter.NewsPO2BOConverter
+import net.chris.news.fondue.repository.converter.NewsPO2BOConverterImpl
 import net.chris.news.fondue.repository.converter.NewsPersistentConverter
+import net.chris.news.fondue.repository.converter.NewsPersistentConverterImpl
 import net.chris.news.fondue.repository.dao.NewsDAO
 import net.chris.news.fondue.repository.db.NewsDatabase
 import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.usecase.repo.NewsListRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,7 +35,11 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindNewsPersistentConverter(newsPersistentConverter: NewsPersistentConverter): NewsConverter
+    abstract fun bindNewsPersistentConverter(converter: NewsPersistentConverterImpl): NewsPersistentConverter
+
+    @Singleton
+    @Binds
+    abstract fun bindNewsPO2BOConverter(converter: NewsPO2BOConverterImpl): NewsPO2BOConverter
 
     companion object {
 
@@ -43,7 +50,7 @@ abstract class RepositoryModule {
                 .baseUrl(baseUrl)
                 .client(
                     OkHttpClient.Builder()
-                        .addInterceptor(HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) Level.BODY else Level.NONE))
+                        .addInterceptor(HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) BODY else NONE))
                         .addInterceptor(StethoInterceptor())
                         .build()
                 )
@@ -55,17 +62,11 @@ abstract class RepositoryModule {
 
         @Singleton
         @Provides
-        fun provideCompositeDisposable(): CompositeDisposable {
-            return CompositeDisposable()
-        }
-
-        @Singleton
-        @Provides
         fun provideNewsDatabase(context: Context): NewsDatabase {
             return Room.databaseBuilder(
                 context,
                 NewsDatabase::class.java,
-                "news_database"
+                DATABASE_NAME
             ).build()
         }
 
