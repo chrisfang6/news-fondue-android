@@ -12,11 +12,13 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
+    implementation deps.joda_time
+
     // network
     implementation deps.network.gson
 
     // architecture
     implementation deps.arch.rxjava
-    implementation deps.arch.dagger
-    kapt deps.arch.dagger_compiler
+    implementation deps.arch.dagger.runtime
+    kapt deps.arch.dagger.compiler
 }

@@ -1,27 +1,16 @@
 package net.chris.news.fondue.android.viewmodel
 
-import androidx.lifecycle.ViewModel
-import net.chris.news.fondue.usecase.NewsListUseCase
-import net.chris.news.fondue.usecase.callback.ResultListener
-import timber.log.Timber
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import net.chris.news.fondue.android.paging.HeadlinesDataSourceFactory
+import net.chris.news.fondue.android.paging.PagingConstant.PAGING_SIZE
+import net.chris.news.fondue.android.vo.NewsVO
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
-    private val newsListUseCase: NewsListUseCase
-) : ViewModel() {
+    factory: HeadlinesDataSourceFactory
+) : BaseViewModel() {
 
-    fun request() {
-        newsListUseCase.getHeadlines(
-            "T1348647853363",
-            0,
-            object : ResultListener {
-                override fun onSuccess() {
-                    Timber.d("got news successfully")
-                }
-
-                override fun onError(error: Throwable) {
-                    Timber.e(error)
-                }
-            })
-    }
+    val headlinesLiveData: LiveData<PagedList<NewsVO>> = LivePagedListBuilder(factory, PAGING_SIZE).build()
 }

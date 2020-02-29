@@ -34,6 +34,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 preBuild.dependsOn ktlint
@@ -45,6 +48,10 @@ dependencies {
     implementation project(path: ':repository')
 
     implementation deps.kotlin.stdlib
+
+    implementation deps.joda_time
+
+    implementation deps.picasso
 
     implementation deps.jetpack.appcompat
     implementation deps.jetpack.core_ktx
@@ -71,10 +78,18 @@ dependencies {
     implementation deps.jetpack.navigation_fragment_ktx
     implementation deps.jetpack.navigation_ui_ktx
 
+    // paging
+    implementation deps.jetpack.paging.runtime
+
     // architecture
     implementation deps.arch.timber
-    implementation deps.arch.dagger
-    kapt deps.arch.dagger_compiler
+    implementation deps.arch.dagger.runtime
+    implementation deps.arch.dagger.android
+    implementation deps.arch.dagger.android_support
+    kapt deps.arch.dagger.compiler
+    kapt deps.arch.dagger.android_processor
+    implementation deps.arch.rxjava
+    implementation deps.arch.rxandroid
 
     // network
     implementation deps.network.retrofit
