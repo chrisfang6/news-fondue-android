@@ -44,7 +44,7 @@ abstract class RepositoryModule {
                 .client(
                     OkHttpClient.Builder()
                         .addInterceptor(HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) Level.BODY else Level.NONE))
-                        .addInterceptor(StethoInterceptor())
+                        .addNetworkInterceptor(StethoInterceptor())
                         .build()
                 )
                 .addConverterFactory(GsonConverterFactory.create())
