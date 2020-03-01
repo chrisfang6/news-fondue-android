@@ -18,5 +18,12 @@
         android:id="@+id/detailFragment"
         android:name="net.chris.news.fondue.android.view.DetailFragment"
         android:label="DetailFragment"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="@string/action_args_title"
+            app:argType="string" />
+        <argument
+            android:name="@string/action_args_url"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -15,9 +15,22 @@
  */
 package net.chris.news.fondue.android.view
 
+import android.os.Bundle
+import android.view.View
+import androidx.navigation.fragment.navArgs
 import net.chris.news.fondue.android.R
+import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
 
 class DetailFragment : BaseFragment() {
+
+    private val args: DetailFragmentArgs by navArgs()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        newsDetail.settings.loadWithOverviewMode = true
+        newsDetail.settings.useWideViewPort = false
+        newsDetail.loadUrl(args.StringActionArgsUrl)
+    }
 
     override fun getLayoutId() = R.layout.fragment_detail
 }

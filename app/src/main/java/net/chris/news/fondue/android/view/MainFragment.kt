@@ -17,12 +17,11 @@ package net.chris.news.fondue.android.view
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
@@ -50,14 +49,9 @@ class MainFragment : BaseFragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
-        newsViewModel.headlinesLiveData.observe(viewLifecycleOwner, Observer<PagedList<NewsVO>> { render(it) })
-        return view
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        newsViewModel.headlinesLiveData.observe(viewLifecycleOwner, Observer<PagedList<NewsVO>> { render(it) })
         setupRecyclerView()
     }
 
@@ -73,7 +67,11 @@ class MainFragment : BaseFragment() {
         newsRecycler.addOnItemTouchListener(RecyclerItemClickListener(requireContext(), newsRecycler, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 val item = (newsRecycler.adapter as NewsAdapter).getDetail(position)
-                Timber.d("# clicked news ${item?.docId}: ${item?.title}")
+                Timber.d("# clicked news ${item?.docId}: ${item?.title}: ${item?.url}")
+                item?.url?.run {
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(item.title, this)
+                    findNavController().navigate(action)
+                }
             }
         }))
     }

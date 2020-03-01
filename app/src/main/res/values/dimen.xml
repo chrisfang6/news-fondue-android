@@ -2,7 +2,8 @@
 <resources>
     <dimen name="padding_large">32dp</dimen>
     <dimen name="padding_normal">24dp</dimen>
-    <dimen name="padding_small">18dp</dimen>
+    <dimen name="padding_small">16dp</dimen>
+    <dimen name="padding_xsmall">8dp</dimen>
 
     <dimen name="item_view_height">300dp</dimen>
     <dimen name="item_view_img_width">400dp</dimen>

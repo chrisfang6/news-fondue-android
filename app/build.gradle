@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 apply from: '../ktlint.gradle'
 
@@ -75,8 +76,9 @@ dependencies {
     testImplementation deps.test.arch_core
 
     // navigation
-    implementation deps.jetpack.navigation_fragment_ktx
-    implementation deps.jetpack.navigation_ui_ktx
+    implementation deps.jetpack.navigation.fragment
+    implementation deps.jetpack.navigation.ui
+//    implementation deps.jetpack.navigation.dynamic_features_fragment
 
     // paging
     implementation deps.jetpack.paging.runtime
