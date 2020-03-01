@@ -26,12 +26,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_main.*
 import net.chris.news.fondue.android.R
 import net.chris.news.fondue.android.view.adapter.NewsAdapter
+import net.chris.news.fondue.android.view.listener.RecyclerItemClickListener
+import net.chris.news.fondue.android.view.listener.RecyclerItemClickListener.OnItemClickListener
 import net.chris.news.fondue.android.viewmodel.NewsViewModel
 import net.chris.news.fondue.android.vo.NewsVO
+import timber.log.Timber
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_main.news_recycler as newsRecycler
 
 class MainFragment : BaseFragment() {
 
@@ -65,7 +68,13 @@ class MainFragment : BaseFragment() {
     override fun getLayoutId() = R.layout.fragment_main
 
     private fun setupRecyclerView() {
-        news_recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        news_recycler.adapter = adapter
+        newsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        newsRecycler.adapter = adapter
+        newsRecycler.addOnItemTouchListener(RecyclerItemClickListener(requireContext(), newsRecycler, object : OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                val item = (newsRecycler.adapter as NewsAdapter).getDetail(position)
+                Timber.d("# clicked news ${item?.docId}: ${item?.title}")
+            }
+        }))
     }
 }

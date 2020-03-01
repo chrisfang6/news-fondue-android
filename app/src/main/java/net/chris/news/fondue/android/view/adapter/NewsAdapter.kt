@@ -35,6 +35,8 @@ class NewsAdapter : PagedListAdapter<NewsVO, NewsViewHolder>(ITEM_DIFF_CALLBACK)
         } ?: holder.clear()
     }
 
+    fun getDetail(position: Int): NewsVO? = getItem(position)
+
     companion object {
         private val ITEM_DIFF_CALLBACK = object : DiffUtil.ItemCallback<NewsVO>() {
             override fun areItemsTheSame(oldItem: NewsVO, newItem: NewsVO): Boolean = oldItem.docId == newItem.docId
