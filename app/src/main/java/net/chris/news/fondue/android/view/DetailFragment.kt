@@ -29,8 +29,7 @@ class DetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        newsDetail.settings.loadWithOverviewMode = true
-        newsDetail.settings.useWideViewPort = false
+        newsDetail.settings.textZoom = 90
         newsDetail.loadUrl(args.StringActionArgsUrl)
     }
 
