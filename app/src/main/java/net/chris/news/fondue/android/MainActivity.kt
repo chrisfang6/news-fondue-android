@@ -21,6 +21,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.tool_bar as toolBar
 
 class MainActivity : BaseActivity(), HasAndroidInjector {
 
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolBar)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

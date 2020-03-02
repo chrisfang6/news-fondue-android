@@ -21,6 +21,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import net.chris.news.fondue.android.BaseActivity
+import net.chris.news.fondue.android.R
 
 abstract class BaseFragment : Fragment() {
 
@@ -30,6 +32,24 @@ abstract class BaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(getLayoutId(), null, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActionBar()
+    }
+
     @LayoutRes
-    abstract fun getLayoutId(): Int
+    protected abstract fun getLayoutId(): Int
+
+    private fun setActionBar() {
+        (activity as? BaseActivity)?.setActionBar(showHomeAsUp(), getActionBarTitle())
+    }
+
+    protected open fun showHomeAsUp() = false
+
+    protected open fun getActionBarTitle() = getString(R.string.home_title)
 }

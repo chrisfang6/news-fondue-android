@@ -17,4 +17,12 @@ package net.chris.news.fondue.android
 
 import androidx.appcompat.app.AppCompatActivity
 
-open class BaseActivity : AppCompatActivity()
+open class BaseActivity : AppCompatActivity() {
+
+    fun setActionBar(showHomeAsUp: Boolean, title: String) {
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(showHomeAsUp)
+            setTitle(title)
+        }
+    }
+}
