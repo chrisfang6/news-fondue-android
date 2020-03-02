@@ -18,10 +18,14 @@ package net.chris.news.fondue.android.view
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.ViewTreeObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import net.chris.news.fondue.android.R
+import net.chris.news.fondue.android.extension.load
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
+import kotlinx.android.synthetic.main.fragment_detail.news_detail_img as newsImage
 
 class DetailFragment : BaseFragment() {
 
@@ -29,8 +33,19 @@ class DetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        args.StringActionArgsImgUrl?.let { imgPath -> newsImage.load(imgPath, R.drawable.img_loading, R.drawable.img_error) }
+            ?: { newsImage.visibility = GONE }()
         newsDetail.settings.textZoom = 90
         newsDetail.loadUrl(args.StringActionArgsUrl)
+        newsDetail.settings.builtInZoomControls = false
+        newsDetail.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                if (newsDetail.measuredHeight != 0) {
+                    newsDetail.viewTreeObserver.removeOnPreDrawListener(this)
+                }
+                return false
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

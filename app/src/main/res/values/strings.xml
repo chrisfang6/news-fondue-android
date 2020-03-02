@@ -5,4 +5,5 @@
 
     <string name="action_args_title">title</string>
     <string name="action_args_url">url</string>
+    <string name="action_args_img_url">img_url</string>
 </resources>

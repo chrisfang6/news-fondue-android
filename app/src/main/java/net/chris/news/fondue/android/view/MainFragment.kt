@@ -69,7 +69,7 @@ class MainFragment : BaseFragment() {
                 val item = (newsRecycler.adapter as NewsAdapter).getDetail(position)
                 Timber.d("# clicked news ${item?.docId}: ${item?.title}: ${item?.url}")
                 item?.url?.run {
-                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(item.title, this)
+                    val action = MainFragmentDirections.actionMainFragmentToDetailFragment(item.title, this, item.imageSrc)
                     findNavController().navigate(action)
                 }
             }

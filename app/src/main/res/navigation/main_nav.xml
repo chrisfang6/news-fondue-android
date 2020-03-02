@@ -25,5 +25,9 @@
         <argument
             android:name="@string/action_args_url"
             app:argType="string" />
+        <argument
+            android:name="@string/action_args_img_url"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
