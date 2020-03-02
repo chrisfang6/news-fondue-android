@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_news_layout.view.*
 import net.chris.news.fondue.android.R
 import net.chris.news.fondue.android.extension.load
+import net.chris.news.fondue.android.extension.toPresentString
 import net.chris.news.fondue.android.vo.NewsVO
 
 class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,7 +29,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.news_title.text = news.title
         itemView.news_img.load(news.imageSrc, R.drawable.img_loading, R.drawable.img_error)
         itemView.news_source.text = news.source
-        itemView.news_timestamp.text = news.postTime.toString()
+        itemView.news_timestamp.text = news.postTime.toPresentString()
     }
 
     /**
