@@ -24,9 +24,8 @@ import net.chris.news.fondue.android.vo.NewsVO
 import net.chris.news.fondue.usecase.NewsListUseCase
 import net.chris.news.fondue.usecase.bo.NewsBO
 import timber.log.Timber
-import javax.inject.Inject
 
-class HeadlinesDataSourceImpl @Inject constructor(
+class HeadlinesDataSourceImpl(
     private val compositeDisposable: CompositeDisposable,
     private val newsListUseCase: NewsListUseCase,
     private val converter: NewsBO2VOConverter

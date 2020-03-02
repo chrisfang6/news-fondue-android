@@ -34,6 +34,7 @@ import net.chris.news.fondue.android.vo.NewsVO
 import timber.log.Timber
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_main.news_recycler as newsRecycler
+import kotlinx.android.synthetic.main.fragment_main.news_swipe as swipeRefreshLayout
 
 class MainFragment : BaseFragment() {
 
@@ -52,11 +53,17 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         newsViewModel.headlinesLiveData.observe(viewLifecycleOwner, Observer<PagedList<NewsVO>> { render(it) })
+        swipeRefreshLayout.setOnRefreshListener {
+            if (!newsViewModel.invalidateDataSource()) {
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
         setupRecyclerView()
     }
 
     private fun render(pagedList: PagedList<NewsVO>) {
         adapter.submitList(pagedList)
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun getLayoutId() = R.layout.fragment_main

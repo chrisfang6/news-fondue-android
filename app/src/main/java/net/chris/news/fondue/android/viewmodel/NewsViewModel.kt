@@ -24,8 +24,14 @@ import net.chris.news.fondue.android.vo.NewsVO
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
-    factory: HeadlinesDataSourceFactory
+    private val factory: HeadlinesDataSourceFactory
 ) : BaseViewModel() {
 
     val headlinesLiveData: LiveData<PagedList<NewsVO>> = LivePagedListBuilder(factory, PAGING_SIZE).build()
+
+    fun invalidateDataSource(): Boolean =
+        factory.currentDataSource()?.let {
+            it.invalidate()
+            true
+        } ?: false
 }

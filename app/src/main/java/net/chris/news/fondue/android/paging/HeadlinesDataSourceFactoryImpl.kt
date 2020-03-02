@@ -15,13 +15,27 @@
  */
 package net.chris.news.fondue.android.paging
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
+import io.reactivex.disposables.CompositeDisposable
+import net.chris.news.fondue.android.converter.NewsBO2VOConverter
 import net.chris.news.fondue.android.vo.NewsVO
+import net.chris.news.fondue.usecase.NewsListUseCase
 import javax.inject.Inject
 
 class HeadlinesDataSourceFactoryImpl @Inject constructor(
-    private val dataSource: HeadlinesDataSource
+    private val compositeDisposable: CompositeDisposable,
+    private val newsListUseCase: NewsListUseCase,
+    private val converter: NewsBO2VOConverter
 ) : HeadlinesDataSourceFactory() {
 
-    override fun create(): DataSource<String, NewsVO> = dataSource
+    private val _sourceLiveData = MutableLiveData<HeadlinesDataSource>()
+
+    override fun create(): DataSource<String, NewsVO> {
+        val dataSource = HeadlinesDataSourceImpl(compositeDisposable, newsListUseCase, converter)
+        _sourceLiveData.postValue(dataSource)
+        return dataSource
+    }
+
+    override fun currentDataSource(): DataSource<String, NewsVO>? = _sourceLiveData.value
 }
