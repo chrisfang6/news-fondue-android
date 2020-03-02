@@ -16,7 +16,9 @@
 package net.chris.news.fondue.android.view
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import net.chris.news.fondue.android.R
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
@@ -32,5 +34,21 @@ class DetailFragment : BaseFragment() {
         newsDetail.loadUrl(args.StringActionArgsUrl)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().popBackStack()
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
     override fun getLayoutId() = R.layout.fragment_detail
+
+    override fun showHomeAsUp() = true
+
+    override fun getActionBarTitle() = args.StringActionArgsTitle
 }

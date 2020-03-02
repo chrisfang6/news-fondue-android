@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">news-fondue-android</string>
 
+    <string name="home_title">网易新闻</string>
+
     <string name="action_args_title">title</string>
     <string name="action_args_url">url</string>
 </resources>
