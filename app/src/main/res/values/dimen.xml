@@ -6,9 +6,11 @@
     <dimen name="padding_xsmall">8dp</dimen>
 
     <dimen name="item_view_height">300dp</dimen>
-    <dimen name="item_view_img_width">400dp</dimen>
-    <dimen name="item_view_img_height">300dp</dimen>
+    <dimen name="item_view_img_width">90dp</dimen>
+    <dimen name="item_view_img_height">90dp</dimen>
     <dimen name="item_view_title_text_size">24sp</dimen>
     <dimen name="item_view_source_text_size">16sp</dimen>
     <dimen name="item_view_timestamp_text_size">14sp</dimen>
+
+    <dimen name="detail_img_height">270dp</dimen>
 </resources>

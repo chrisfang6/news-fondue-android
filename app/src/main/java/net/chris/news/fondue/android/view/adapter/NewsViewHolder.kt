@@ -27,7 +27,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(news: NewsVO) {
         itemView.news_title.text = news.title
-        itemView.news_img.load(news.imageSrc, R.drawable.img_loading, R.drawable.img_error)
+        itemView.news_img.load(itemView.context, news.imageSrc, R.drawable.ic_news_loading, R.drawable.ic_news_error)
         itemView.news_source.text = news.source
         itemView.news_timestamp.text = news.postTime.toPresentString()
     }

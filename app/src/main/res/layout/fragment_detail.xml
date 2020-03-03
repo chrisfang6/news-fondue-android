@@ -14,12 +14,11 @@
             android:id="@+id/news_detail_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/news_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/img_error" />
+            tools:src="@drawable/ic_news_error" />
 
         <WebView
             android:id="@+id/news_detail"

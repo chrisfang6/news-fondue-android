@@ -17,7 +17,7 @@ build_conf.instrumentation_runner = "androidx.test.runner.AndroidJUnitRunner"
 ext.build_conf = build_conf
 
 def versions = [:]
-versions.gradle_plugin = '3.5.3'
+versions.gradle_plugin = '3.6.1'
 versions.kotlin = '1.3.61'
 versions.constraintlayout = '1.1.3'
 versions.nav = '2.3.0-alpha02'

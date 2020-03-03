@@ -16,6 +16,7 @@ android {
         versionCode build_conf.versionCode
         versionName build_conf.versionName
         testInstrumentationRunner build_conf.instrumentation_runner
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         debug {

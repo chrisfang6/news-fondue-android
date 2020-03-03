@@ -15,19 +15,81 @@
  */
 package net.chris.news.fondue.android.extension
 
+import android.content.Context
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.squareup.picasso.Picasso
+import timber.log.Timber
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit.MILLISECONDS
+
+object ImageLibraryHelper {
+
+    private const val corePoolSize = 1
+
+    private const val maximumPoolSize = 150
+
+    private const val keepAliveTime = 60L
+
+    private lateinit var picasso: Picasso
+
+    fun getPicasso(context: Context): Picasso {
+        if (ImageLibraryHelper::picasso.isInitialized) {
+            return picasso
+        }
+        Timber.d("# Picasso has NOT been initialized.")
+        picasso = Picasso.Builder(context).executor(
+            ThreadPoolExecutor(
+                corePoolSize,
+                maximumPoolSize,
+                keepAliveTime,
+                MILLISECONDS,
+                LinkedBlockingQueue<Runnable>()
+            )
+        ).build()
+        return picasso
+    }
+}
 
 fun ImageView.load(
+    context: Context,
     path: String?,
     @DrawableRes loadingPlaceholder: Int,
     @DrawableRes errorPlaceholder: Int
 ) {
+    val picasso = ImageLibraryHelper.getPicasso(context)
     path?.isNotBlank()?.let { validPath ->
         when (validPath) {
-            true -> Picasso.get().load(path).placeholder(loadingPlaceholder).error(errorPlaceholder).into(this)
-            else -> setImageResource(errorPlaceholder)
+            true -> picasso
+                .load(path)
+                .placeholder(loadingPlaceholder)
+                .error(errorPlaceholder)
+                .fit()
+                .centerCrop()
+                .into(this)
+            else -> picasso.load(errorPlaceholder)
         }
-    } ?: setImageResource(errorPlaceholder)
+    } ?: picasso.load(errorPlaceholder)
+}
+
+fun ImageView.loadAndResize(
+    context: Context,
+    path: String?,
+    @DrawableRes loadingPlaceholder: Int,
+    @DrawableRes errorPlaceholder: Int,
+    width: Int
+) {
+    val picasso = ImageLibraryHelper.getPicasso(context)
+    path?.isNotBlank()?.let { validPath ->
+        when (validPath) {
+            true -> picasso
+                .load(path)
+                .placeholder(loadingPlaceholder)
+                .error(errorPlaceholder)
+                .resize(width, 0)
+                .into(this)
+            else -> picasso.load(errorPlaceholder)
+        }
+    } ?: picasso.load(errorPlaceholder)
 }

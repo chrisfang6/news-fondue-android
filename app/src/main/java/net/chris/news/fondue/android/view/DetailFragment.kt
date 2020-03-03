@@ -15,6 +15,7 @@
  */
 package net.chris.news.fondue.android.view
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -23,7 +24,7 @@ import android.view.ViewTreeObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import net.chris.news.fondue.android.R
-import net.chris.news.fondue.android.extension.load
+import net.chris.news.fondue.android.extension.loadAndResize
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
 import kotlinx.android.synthetic.main.fragment_detail.news_detail_img as newsImage
 
@@ -33,8 +34,13 @@ class DetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        args.StringActionArgsImgUrl?.let { imgPath -> newsImage.load(imgPath, R.drawable.img_loading, R.drawable.img_error) }
-            ?: { newsImage.visibility = GONE }()
+        args.StringActionArgsImgUrl?.let { imgPath ->
+            val width = Point().let {
+                requireActivity().windowManager.defaultDisplay.getSize(it)
+                it.x
+            }
+            newsImage.loadAndResize(requireContext(), imgPath, R.drawable.ic_news_loading, R.drawable.ic_news_error, width)
+        } ?: { newsImage.visibility = GONE }()
         newsDetail.settings.textZoom = 90
         newsDetail.loadUrl(args.StringActionArgsUrl)
         newsDetail.settings.builtInZoomControls = false
