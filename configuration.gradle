@@ -11,8 +11,8 @@ build_conf.buildToolsVersion = "29.0.1"
 build_conf.minSdkVersion = 21
 build_conf.targetSdkVersion = 29
 build_conf.applicationId = "net.chris.news.fondue.android"
-build_conf.versionCode = 1
-build_conf.versionName = "0.0.1"
+build_conf.versionCode = 2
+build_conf.versionName = "0.0.2"
 build_conf.instrumentation_runner = "androidx.test.runner.AndroidJUnitRunner"
 ext.build_conf = build_conf
 
