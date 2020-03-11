@@ -20,6 +20,9 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import net.chris.news.fondue.android.Constant.FLUTTER_ENGINE_ID
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.tool_bar as toolBar
 
@@ -28,11 +31,24 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
+    @Inject
+    lateinit var flutterEngine: FlutterEngine
+
+    private val flutterEngineCache by lazy { FlutterEngineCache.getInstance() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolBar)
+        // Cache the FlutterEngine to be used by FlutterActivity.
+        flutterEngineCache.put(FLUTTER_ENGINE_ID, flutterEngine)
+    }
+
+    override fun onDestroy() {
+        flutterEngineCache.remove(FLUTTER_ENGINE_ID)
+        flutterEngine.destroy()
+        super.onDestroy()
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

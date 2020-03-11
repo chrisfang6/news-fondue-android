@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import io.flutter.embedding.android.FlutterActivity
+import net.chris.news.fondue.android.Constant.FLUTTER_ENGINE_ID
 import net.chris.news.fondue.android.R
 import net.chris.news.fondue.android.extension.loadAndResize
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
@@ -62,21 +63,17 @@ class DetailFragment : BaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().popBackStack()
-                true
-            }
-            R.id.action_flutter -> {
-                startActivity(
-                    FlutterActivity.createDefaultIntent(requireContext())
-                )
-                true
-            }
-            else -> {
-                false
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
+            findNavController().popBackStack()
+            true
+        }
+        R.id.action_flutter -> {
+            startActivity(FlutterActivity.withCachedEngine(FLUTTER_ENGINE_ID).build(requireContext()))
+            true
+        }
+        else -> {
+            false
         }
     }
 

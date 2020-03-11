@@ -29,7 +29,8 @@ import javax.inject.Singleton
         AppModule::class,
         RepositoryModule::class,
         ViewModelModule::class,
-        ActivityModule::class
+        ActivityModule::class,
+        FlutterModule::class
     ]
 )
 interface AppComponent {
