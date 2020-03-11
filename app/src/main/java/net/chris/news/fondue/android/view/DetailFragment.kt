@@ -17,12 +17,15 @@ package net.chris.news.fondue.android.view
 
 import android.graphics.Point
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewTreeObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import io.flutter.embedding.android.FlutterActivity
 import net.chris.news.fondue.android.R
 import net.chris.news.fondue.android.extension.loadAndResize
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
@@ -54,10 +57,21 @@ class DetailFragment : BaseFragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 findNavController().popBackStack()
+                true
+            }
+            R.id.action_flutter -> {
+                startActivity(
+                    FlutterActivity.createDefaultIntent(requireContext())
+                )
                 true
             }
             else -> {

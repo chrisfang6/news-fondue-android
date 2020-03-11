@@ -1,2 +1,8 @@
 include ':app', ':domain', ':repository', ':usecase'
-rootProject.name='news-fondue-android'
+rootProject.name = 'news-fondue-android'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir,
+        'flutter/.android/include_flutter.groovy'
+))
+include ':flutter'
