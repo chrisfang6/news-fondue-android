@@ -1,0 +1,4 @@
+[submodule "flutter"]
+	path = flutter
+	url = git@github.com:chrisfang6/news_fondue_flutter.git
+	branch = master
