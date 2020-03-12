@@ -15,6 +15,7 @@
  */
 package net.chris.news.fondue.android.view
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.view.Menu
@@ -25,10 +26,13 @@ import android.view.View.GONE
 import android.view.ViewTreeObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import io.flutter.embedding.android.FlutterActivity
-import net.chris.news.fondue.android.Constant.FLUTTER_ENGINE_ID
+import net.chris.news.fondue.android.Constant.INTENT_PARAM_ROUTE
+import net.chris.news.fondue.android.Constant.INTENT_PARAM_TITLE
+import net.chris.news.fondue.android.Constant.INTENT_PARAM_URL
+import net.chris.news.fondue.android.NewsDetailFlutterActivity
 import net.chris.news.fondue.android.R
 import net.chris.news.fondue.android.extension.loadAndResize
+import org.json.JSONObject
 import kotlinx.android.synthetic.main.fragment_detail.news_detail as newsDetail
 import kotlinx.android.synthetic.main.fragment_detail.news_detail_img as newsImage
 
@@ -69,7 +73,16 @@ class DetailFragment : BaseFragment() {
             true
         }
         R.id.action_flutter -> {
-            startActivity(FlutterActivity.withCachedEngine(FLUTTER_ENGINE_ID).build(requireContext()))
+            startActivity(
+                Intent(requireContext(), NewsDetailFlutterActivity::class.java)
+                    .putExtra(
+                        INTENT_PARAM_ROUTE,
+                        JSONObject()
+                            .put(INTENT_PARAM_URL, args.StringActionArgsUrl)
+                            .put(INTENT_PARAM_TITLE, args.StringActionArgsTitle)
+                            .toString()
+                    )
+            )
             true
         }
         else -> {
