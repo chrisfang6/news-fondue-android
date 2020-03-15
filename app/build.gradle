@@ -48,6 +48,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':usecase')
     implementation project(path: ':repository')
+    implementation project(path: ':database')
     implementation project(path: ':flutter')
 
     implementation deps.kotlin.stdlib

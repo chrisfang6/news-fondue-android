@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-android-extensions'
+
+apply from: '../ktlint.gradle'
+
+preBuild.dependsOn ktlint
+
+android {
+    compileSdkVersion build_conf.compileSdkVersion
+    buildToolsVersion build_conf.buildToolsVersion
+    defaultConfig {
+        minSdkVersion build_conf.minSdkVersion
+        targetSdkVersion build_conf.targetSdkVersion
+        versionCode build_conf.versionCode
+        versionName build_conf.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        staging {
+            initWith debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':repository')
+
+    implementation deps.kotlin.stdlib
+
+    implementation deps.joda_time
+    implementation deps.arch.dagger.runtime
+    kapt deps.arch.dagger.compiler
+
+    // persistence
+    implementation deps.jetpack.room.runtime
+    // For Kotlin use kapt instead of annotationProcessor
+    kapt deps.jetpack.room.compiler
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation deps.jetpack.room.ktx
+    // optional - RxJava support for Room
+    implementation deps.jetpack.room.rxjava
+    // optional - Guava support for Room, including Optional and ListenableFuture
+//    implementation "androidx.room:room-guava:$room_version"
+    // Test helpers
+    testImplementation deps.test.room
+}

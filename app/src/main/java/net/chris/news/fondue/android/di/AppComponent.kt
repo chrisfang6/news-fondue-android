@@ -28,6 +28,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AppModule::class,
         RepositoryModule::class,
+        DatabaseModule::class,
         ViewModelModule::class,
         ActivityModule::class,
         FlutterModule::class

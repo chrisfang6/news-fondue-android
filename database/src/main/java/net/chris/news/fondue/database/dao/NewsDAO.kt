@@ -13,7 +13,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package net.chris.news.fondue.repository.dao
+package net.chris.news.fondue.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

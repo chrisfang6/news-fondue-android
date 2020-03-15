@@ -21,7 +21,6 @@ import io.reactivex.schedulers.Schedulers
 import net.chris.news.fondue.repository.Constant.SIZE_PER_REQUEST
 import net.chris.news.fondue.repository.converter.NewsPO2BOConverterImpl
 import net.chris.news.fondue.repository.converter.NewsPersistentConverterImpl
-import net.chris.news.fondue.repository.dao.NewsDAO
 import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.repository.po.NewsPO
 import net.chris.news.fondue.usecase.NewsType
@@ -37,7 +36,7 @@ class NewsListRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
     private val newsPersistentConverter: NewsPersistentConverterImpl,
     private val newsPO2BOConverter: NewsPO2BOConverterImpl,
-    private val newsDAO: NewsDAO
+    private val newsDatabaseHandler: NewsDatabaseHandler
 ) : NewsListRepository {
 
     private var fromIndexForAfter = 0
@@ -154,7 +153,7 @@ class NewsListRepositoryImpl @Inject constructor(
         requestedLoadSize: Int,
         type: NewsType
     ) = Single.fromCallable<List<NewsPO>> {
-        newsDAO.getAllNewsBefore(
+        newsDatabaseHandler.getAllNewsBefore(
             type.name,
             beforeDocId,
             requestedLoadSize
@@ -167,12 +166,12 @@ class NewsListRepositoryImpl @Inject constructor(
         type: NewsType
     ) = Single.fromCallable<List<NewsPO>> {
         (afterDocId?.let {
-            newsDAO.getAllNewsAfter(
+            newsDatabaseHandler.getAllNewsAfter(
                 type.name,
                 afterDocId,
                 requestedLoadSize
             )
-        } ?: newsDAO.getAllNews(
+        } ?: newsDatabaseHandler.getAllNews(
             type.name,
             requestedLoadSize
         )) ?: listOf()
@@ -187,7 +186,7 @@ class NewsListRepositoryImpl @Inject constructor(
         .map { newsPersistentConverter.apply(it, type) }
         .toList()
         .toObservable()
-        .doOnNext { newsDAO.insertAll(*it.toTypedArray()) }
+        .doOnNext { newsDatabaseHandler.insertAll(*it.toTypedArray()) }
 
     private fun fetchNetworkNewsSingle(
         fromIndex: Int,
