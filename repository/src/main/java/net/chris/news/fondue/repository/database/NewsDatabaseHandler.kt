@@ -13,16 +13,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package net.chris.news.fondue.repository.converter
+package net.chris.news.fondue.repository.database
 
-import androidx.room.TypeConverter
-import org.joda.time.DateTime
+import net.chris.news.fondue.repository.po.NewsPO
 
-internal class DateConverter {
+interface NewsDatabaseHandler {
 
-    @TypeConverter
-    fun fromDate(date: DateTime?): Long = date?.millis ?: DateTime().millis
+    fun getAllNews(type: String, limitedNumber: Int): List<NewsPO>?
 
-    @TypeConverter
-    fun toDate(timestamp: Long?): DateTime = timestamp?.let { DateTime(timestamp) } ?: DateTime()
+    fun getAllNewsAfter(type: String, afterDocId: String, limitedNumber: Int): List<NewsPO>?
+
+    fun getAllNewsBefore(type: String, beforeDocId: String, limitedNumber: Int): List<NewsPO>?
+
+    fun insertAll(vararg news: NewsPO)
 }

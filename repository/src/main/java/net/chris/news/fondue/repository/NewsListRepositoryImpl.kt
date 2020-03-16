@@ -22,6 +22,7 @@ import net.chris.news.fondue.repository.Constant.MAX_TRY
 import net.chris.news.fondue.repository.Constant.SIZE_PER_REQUEST
 import net.chris.news.fondue.repository.converter.NewsDO2POConverter
 import net.chris.news.fondue.repository.converter.NewsPO2BOConverter
+import net.chris.news.fondue.repository.database.NewsDatabaseHandler
 import net.chris.news.fondue.repository.network.NewsWebService
 import net.chris.news.fondue.repository.po.HeadlinesPO
 import net.chris.news.fondue.repository.po.NewsPO

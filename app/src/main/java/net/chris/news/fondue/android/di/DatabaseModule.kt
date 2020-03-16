@@ -24,7 +24,7 @@ import net.chris.news.fondue.database.NewsDatabaseHandlerImpl
 import net.chris.news.fondue.database.dao.NewsDAO
 import net.chris.news.fondue.database.db.NewsDatabase
 import net.chris.news.fondue.repository.Constant.DATABASE_NAME
-import net.chris.news.fondue.repository.NewsDatabaseHandler
+import net.chris.news.fondue.repository.database.NewsDatabaseHandler
 import javax.inject.Singleton
 
 @Module
