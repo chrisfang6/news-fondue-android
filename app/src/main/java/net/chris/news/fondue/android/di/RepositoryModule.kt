@@ -23,8 +23,8 @@ import net.chris.news.fondue.android.BuildConfig
 import net.chris.news.fondue.repository.NewsListRepositoryImpl
 import net.chris.news.fondue.repository.converter.NewsPO2BOConverter
 import net.chris.news.fondue.repository.converter.NewsPO2BOConverterImpl
-import net.chris.news.fondue.repository.converter.NewsPersistentConverter
-import net.chris.news.fondue.repository.converter.NewsPersistentConverterImpl
+import net.chris.news.fondue.repository.converter.NewsDO2POConverter
+import net.chris.news.fondue.repository.converter.NewsDO2POConverterImpl
 import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.usecase.repo.NewsListRepository
 import okhttp3.OkHttpClient
@@ -45,7 +45,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindNewsPersistentConverter(converter: NewsPersistentConverterImpl): NewsPersistentConverter
+    abstract fun bindNewsPersistentConverter(converter: NewsDO2POConverterImpl): NewsDO2POConverter
 
     @Singleton
     @Binds

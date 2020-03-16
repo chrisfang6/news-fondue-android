@@ -17,6 +17,8 @@ package net.chris.news.fondue.repository
 
 object Constant {
 
+    internal const val MAX_TRY = 10
+
     const val SIZE_PER_REQUEST = 20
 
     const val DATABASE_NAME = "news_database"

@@ -17,17 +17,14 @@ package net.chris.news.fondue.repository.converter
 
 import net.chris.news.fondue.domain.NewsDO
 import net.chris.news.fondue.repository.po.NewsPO
-import net.chris.news.fondue.usecase.NewsType
 import net.chris.news.fondue.usecase.NewsType.HEADLINES
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
 
-class NewsPersistentConverterImpl @Inject constructor() : NewsPersistentConverter {
+class NewsDO2POConverterImpl @Inject constructor() : NewsDO2POConverter {
 
-    override fun apply(newsDO: NewsDO): NewsPO = apply(newsDO, HEADLINES)
-
-    fun apply(newsDO: NewsDO, newsType: NewsType): NewsPO = NewsPO(
+    override fun apply(newsDO: NewsDO): NewsPO = NewsPO(
         newsDO.digest,
         newsDO.docid ?: "",
         false,
@@ -35,7 +32,7 @@ class NewsPersistentConverterImpl @Inject constructor() : NewsPersistentConverte
         newsDO.ptime?.let { DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime(it) } ?: DateTime(),
         newsDO.source,
         newsDO.title ?: "",
-        newsType.name,
+        newsDO.tname ?: HEADLINES.name,
         newsDO.url
     )
 }

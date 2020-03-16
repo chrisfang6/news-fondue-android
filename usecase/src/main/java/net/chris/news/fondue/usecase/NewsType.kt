@@ -16,5 +16,13 @@
 package net.chris.news.fondue.usecase
 
 enum class NewsType {
-    HEADLINES
+    HEADLINES;
+
+    companion object {
+
+        fun convert(tname: String): NewsType = when (tname) {
+            "头条" -> HEADLINES
+            else -> HEADLINES
+        }
+    }
 }

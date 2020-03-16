@@ -21,32 +21,32 @@ data class NewsDO(
     val cid: String?,
     val commentStatus: Int = 0,
     val daynum: String?,
-    val digest: String?,
-    val docid: String?,
+    val digest: String?, // Digest
+    val docid: String?, // Unique document id
     val ename: String?,
     val hasAD: Int = 0,
     val hasCover: Boolean = false,
     val hasHead: Int = 0,
     val hasIcon: Boolean = false,
     val hasImg: Int = 0,
-    val imgsrc: String?,
+    val imgsrc: String?, // Image url
     val lmodify: String?,
     val ltitle: String?,
     val mtime: String?,
     val order: Int = 0,
     val postid: String?,
     val priority: Int = 0,
-    val ptime: String?,
+    val ptime: String?, // Post time
     val quality: Int = 0,
     val replyCount: Int = 0,
-    val source: String?,
+    val source: String?, // Poster
     val sourceId: String?,
     val subtitle: String?,
     val template: String?,
-    val title: String?,
-    val tname: String?,
+    val title: String?, // News title
+    var tname: String?, // type name
     val topic_background: String?,
-    val url: String?,
+    val url: String?, // Detail url
     val url_3w: String?,
     val votecount: Int = 0
 )

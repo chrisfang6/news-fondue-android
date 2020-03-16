@@ -18,9 +18,10 @@ package net.chris.news.fondue.repository
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import net.chris.news.fondue.repository.Constant.MAX_TRY
 import net.chris.news.fondue.repository.Constant.SIZE_PER_REQUEST
-import net.chris.news.fondue.repository.converter.NewsPO2BOConverterImpl
-import net.chris.news.fondue.repository.converter.NewsPersistentConverterImpl
+import net.chris.news.fondue.repository.converter.NewsDO2POConverter
+import net.chris.news.fondue.repository.converter.NewsPO2BOConverter
 import net.chris.news.fondue.repository.network.NewsApi
 import net.chris.news.fondue.repository.po.NewsPO
 import net.chris.news.fondue.usecase.NewsType
@@ -34,8 +35,8 @@ import kotlin.math.ceil
 
 class NewsListRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
-    private val newsPersistentConverter: NewsPersistentConverterImpl,
-    private val newsPO2BOConverter: NewsPO2BOConverterImpl,
+    private val newsDO2POConverter: NewsDO2POConverter,
+    private val newsPO2BOConverter: NewsPO2BOConverter,
     private val newsDatabaseHandler: NewsDatabaseHandler
 ) : NewsListRepository {
 
@@ -58,7 +59,7 @@ class NewsListRepositoryImpl @Inject constructor(
             Timber.d(afterDocId?.let { "# To get $requestedLoadSize news AFTER $afterDocId" } ?: "# Get $requestedLoadSize TOP news")
             Timber.d("##########")
             // Try so many times, then for the efficiency we would give up even if we can't get the enough news.
-            val shouldTry = 10.coerceAtLeast(ceil(requestedLoadSize.toDouble() / SIZE_PER_REQUEST).toInt())
+            val shouldTry = MAX_TRY.coerceAtLeast(ceil(requestedLoadSize.toDouble() / SIZE_PER_REQUEST).toInt())
             var tried = 0
             var fromIndex = fromIndexForAfter
             fetchLocalNewsAfter(afterDocId, requestedLoadSize, type)
@@ -104,8 +105,8 @@ class NewsListRepositoryImpl @Inject constructor(
             Timber.d("##########")
             Timber.d("# To get news $requestedLoadSize BEFORE $beforeDocId")
             Timber.d("##########")
-            // Try 10 requests, and then for the efficiency we would give up even if we can't touch the top news of current list.
-            val shouldTry = 10
+            // Try MAX_TRY times requests, and then for the efficiency we would give up even if we can't touch the top news of current list.
+            val shouldTry = MAX_TRY
             var tried = 0
             var touched = false // If it has got the news including the top news of current list.
             var fromIndex = 0
@@ -183,7 +184,11 @@ class NewsListRepositoryImpl @Inject constructor(
     ): Observable<out List<NewsPO>> = Single.just(headlinesBO)
         .flatMapObservable { Observable.fromIterable(it.list) }
         .filter { it.docid?.isNotBlank() == true || it.title?.isNotBlank() == true || it.ptime?.isNotBlank() == true }
-        .map { newsPersistentConverter.apply(it, type) }
+        .doOnNext { it.tname = NewsType.convert(type.name).toString() } // Fix the null value bug of the api.
+        .map {
+            Timber.d("# NewsDO: $it")
+            newsDO2POConverter.apply(it)
+        }
         .toList()
         .toObservable()
         .doOnNext { newsDatabaseHandler.insertAll(*it.toTypedArray()) }
