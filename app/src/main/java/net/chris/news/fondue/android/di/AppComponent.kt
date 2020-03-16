@@ -29,6 +29,7 @@ import javax.inject.Singleton
         AppModule::class,
         RepositoryModule::class,
         DatabaseModule::class,
+        WebServiceModule::class,
         ViewModelModule::class,
         ActivityModule::class,
         FlutterModule::class

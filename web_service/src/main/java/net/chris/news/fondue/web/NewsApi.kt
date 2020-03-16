@@ -13,9 +13,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package net.chris.news.fondue.usecase.bo
+package net.chris.news.fondue.web
 
-import com.google.gson.annotations.SerializedName
-import net.chris.news.fondue.domain.NewsDO
+import io.reactivex.Single
+import net.chris.news.fondue.repository.po.HeadlinesPO
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-data class HeadlinesBO(@SerializedName("T1348647853363") val list: List<NewsDO> = listOf())
+interface NewsApi {
+
+    @GET("nc/article/headline/{category}/{start_index}-20.html")
+    fun fetchHeadlines(@Path("category") category: String, @Path("start_index") startIndex: Int): Single<HeadlinesPO>
+}

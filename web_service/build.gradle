@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: '../ktlint.gradle'
+
+preBuild.dependsOn ktlint
+
+android {
+    compileSdkVersion build_conf.compileSdkVersion
+    buildToolsVersion build_conf.buildToolsVersion
+    defaultConfig {
+        minSdkVersion build_conf.minSdkVersion
+        targetSdkVersion build_conf.targetSdkVersion
+        versionCode build_conf.versionCode
+        versionName build_conf.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        staging {
+            initWith debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':repository')
+
+    implementation deps.kotlin.stdlib
+
+    implementation deps.arch.dagger.runtime
+
+    // network
+    implementation deps.network.retrofit
+    implementation deps.network.retrofit_converter_gson
+    implementation deps.network.retrofit_adapter_rxjava
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.runner
+}

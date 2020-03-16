@@ -22,11 +22,11 @@ import net.chris.news.fondue.repository.Constant.MAX_TRY
 import net.chris.news.fondue.repository.Constant.SIZE_PER_REQUEST
 import net.chris.news.fondue.repository.converter.NewsDO2POConverter
 import net.chris.news.fondue.repository.converter.NewsPO2BOConverter
-import net.chris.news.fondue.repository.network.NewsApi
+import net.chris.news.fondue.repository.network.NewsWebService
+import net.chris.news.fondue.repository.po.HeadlinesPO
 import net.chris.news.fondue.repository.po.NewsPO
 import net.chris.news.fondue.usecase.NewsType
 import net.chris.news.fondue.usecase.NewsType.HEADLINES
-import net.chris.news.fondue.usecase.bo.HeadlinesBO
 import net.chris.news.fondue.usecase.bo.NewsBO
 import net.chris.news.fondue.usecase.repo.NewsListRepository
 import timber.log.Timber
@@ -34,7 +34,7 @@ import javax.inject.Inject
 import kotlin.math.ceil
 
 class NewsListRepositoryImpl @Inject constructor(
-    private val newsApi: NewsApi,
+    private val newsWebService: NewsWebService,
     private val newsDO2POConverter: NewsDO2POConverter,
     private val newsPO2BOConverter: NewsPO2BOConverter,
     private val newsDatabaseHandler: NewsDatabaseHandler
@@ -179,9 +179,9 @@ class NewsListRepositoryImpl @Inject constructor(
     }
 
     private fun saveNewsObservable(
-        headlinesBO: HeadlinesBO,
+        headlinesPO: HeadlinesPO,
         type: NewsType
-    ): Observable<out List<NewsPO>> = Single.just(headlinesBO)
+    ): Observable<out List<NewsPO>> = Single.just(headlinesPO)
         .flatMapObservable { Observable.fromIterable(it.list) }
         .filter { it.docid?.isNotBlank() == true || it.title?.isNotBlank() == true || it.ptime?.isNotBlank() == true }
         .doOnNext { it.tname = NewsType.convert(type.name).toString() } // Fix the null value bug of the api.
@@ -196,5 +196,5 @@ class NewsListRepositoryImpl @Inject constructor(
     private fun fetchNetworkNewsSingle(
         fromIndex: Int,
         category: String
-    ) = newsApi.fetchHeadlines(category, fromIndex)
+    ) = newsWebService.fetchHeadlines(category, fromIndex)
 }

@@ -13,15 +13,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package net.chris.news.fondue.repository.network
+package net.chris.news.fondue.web
 
 import io.reactivex.Single
-import net.chris.news.fondue.usecase.bo.HeadlinesBO
-import retrofit2.http.GET
-import retrofit2.http.Path
+import net.chris.news.fondue.repository.network.NewsWebService
+import net.chris.news.fondue.repository.po.HeadlinesPO
+import javax.inject.Inject
 
-interface NewsApi {
+class NewsWebServiceImpl @Inject constructor(
+    private val newsApi: NewsApi
+) : NewsWebService {
 
-    @GET("nc/article/headline/{category}/{start_index}-20.html")
-    fun fetchHeadlines(@Path("category") category: String, @Path("start_index") startIndex: Int): Single<HeadlinesBO>
+    override fun fetchHeadlines(category: String, startIndex: Int): Single<HeadlinesPO> = newsApi.fetchHeadlines(category, startIndex)
 }

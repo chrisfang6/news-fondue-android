@@ -1,4 +1,4 @@
-include ':app', ':domain', ':repository', ':usecase', ':database'
+include ':app', ':domain', ':repository', ':usecase', ':database', ':web_service'
 rootProject.name = 'news-fondue-android'
 setBinding(new Binding([gradle: this]))
 evaluate(new File(
